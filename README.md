@@ -30,7 +30,7 @@ go run main.go
 ## 生成 Swagger 文档
 
 ```bash
-swag init -g cmd/server/main.go -o docs
+swag init -g cmd/server/main.go -o docs --parseInternal
 ```
 
 ## 镜像构建与发布

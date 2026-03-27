@@ -13,7 +13,7 @@ go install github.com/swaggo/swag/cmd/swag@latest
 在项目根目录执行：
 
 ```bash
-swag init -g cmd/server/main.go -o docs
+swag init -g cmd/server/main.go -o docs --parseInternal
 ```
 
 生成产物位于 `docs/` 目录（如 `docs.go`、`swagger.json`、`swagger.yaml`）。
@@ -40,4 +40,3 @@ export API_BASE_SEGMENT=prod-k8s
 ```text
 /api/v1/prod-k8s/namespaces
 ```
-

@@ -10,7 +10,40 @@ const docTemplate = `{
     "version": "1.0"
   },
   "basePath": "{{.BasePath}}",
-  "paths": {}
+  "paths": {
+    "/namespaces": {
+      "get": {
+        "description": "Get all namespaces from the current Kubernetes cluster.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "namespaces"
+        ],
+        "summary": "List namespaces",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "502": {
+            "description": "Bad Gateway",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    }
+  }
 }`
 
 // SwaggerInfo keeps global Swagger metadata.

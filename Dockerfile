@@ -1,15 +1,22 @@
-FROM golang:1.26-alpine AS builder
+## syntax=docker/dockerfile:1.7
+FROM --platform=$BUILDPLATFORM golang:1.26-alpine AS builder
 
 WORKDIR /src
+ARG BUILDPLATFORM
+ARG TARGETPLATFORM
 ARG TARGETOS
 ARG TARGETARCH
 
 COPY go.mod go.sum ./
-RUN go mod download
+RUN --mount=type=cache,target=/go/pkg/mod \
+    --mount=type=cache,target=/root/.cache/go-build \
+    go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=${TARGETOS:-linux} GOARCH=${TARGETARCH:-amd64} go build -o /out/k8s-info ./cmd/server
+RUN --mount=type=cache,target=/go/pkg/mod \
+    --mount=type=cache,target=/root/.cache/go-build \
+    CGO_ENABLED=0 GOOS=${TARGETOS:-linux} GOARCH=${TARGETARCH:-amd64} go build -o /out/k8s-info ./cmd/server
 
 FROM gcr.io/distroless/base-debian12:nonroot
 

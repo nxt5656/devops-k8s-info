@@ -1,13 +1,15 @@
 FROM golang:1.26-alpine AS builder
 
 WORKDIR /src
+ARG TARGETOS
+ARG TARGETARCH
 
 COPY go.mod go.sum ./
 RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /out/k8s-info ./cmd/server
+RUN CGO_ENABLED=0 GOOS=${TARGETOS:-linux} GOARCH=${TARGETARCH:-amd64} go build -o /out/k8s-info ./cmd/server
 
 FROM gcr.io/distroless/base-debian12:nonroot
 

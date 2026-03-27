@@ -1,0 +1,11 @@
+.git
+.gitignore
+.idea
+.vscode
+*.log
+tmp/
+tmp/**
+doc/
+deploy/
+README.md
+
